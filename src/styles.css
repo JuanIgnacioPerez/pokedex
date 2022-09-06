@@ -1,0 +1,14 @@
+@import url("http://fonts.cdnfonts.com/css/pokemon-solid");
+
+body {
+  margin: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(247, 220, 107, 1) 10%,
+    rgba(253, 140, 139, 1) 90%
+  );
+}
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
