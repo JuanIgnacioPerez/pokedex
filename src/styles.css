@@ -12,3 +12,46 @@ body {
   width: 90%;
   margin: 0 auto;
 }
+.btnCont {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.infoPoke {
+  position: absolute;
+  right: 5px;
+  cursor: pointer;
+}
+.btnClose {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  z-index: 300;
+  fill: #00a4c2;
+  transition: all 0.2s ease-in-out;
+}
+.btnClose:hover {
+  fill: #187585;
+  transform: scale(1.1);
+}
+.pokeClose {
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  z-index: 300;
+  fill: #00a4c2;
+  transition: all 0.2s ease-in-out;
+  align-content: flex-end;
+}
+.pokeClose:hover {
+  fill: #187585;
+  transform: scale(1.1);
+}
+.info {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  text-transform: capitalize;
+  margin-bottom: 10px;
+  font-weight: 600;
+}

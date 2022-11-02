@@ -2,21 +2,50 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import Region from "./components/region";
-import "./styles.css";
+import Modal from "./components/modal";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import PokeStore from "./components/pokeStore";
 
-const api = "https://pokeapi.co/api/v2/generation/";
+import "./styles.css";
+//import { PokeProvider, usePoke } from "./context/context";
+
+/* export default()=> <PokeProvider>
+  <App></App>
+</PokeProvider>  */
+
+const api = "https://pokeapi.co/api/v2/";
 
 async function pokedex(index = 1) {
-  const { data } = await axios.get(api + index);
+  const { data } = await axios.get(api + "generation/" + index);
   return data.pokemon_species;
+}
+
+async function pokeType(url) {
+  const { data } = await axios.get(url);
+  return data;
 }
 
 function App() {
   const [pokemon, setPokemon] = useState("");
+  const [details, setDetails] = useState();
+  const [open, setOpen] = useState(false);
+  const [store, setStore] = useState(false);
 
   async function onRegionPress(generation) {
     const pokeGen = await pokedex(generation);
     setPokemon(pokeGen);
+  }
+
+  async function pokeDetails(url) {
+    const details = await pokeType(url);
+    setDetails(details);
+    setOpen(true);
+  }
+
+  async function dexStore(url) {
+    const details = await pokeType(url);
+    setDetails(details);
+    setStore(true);
   }
 
   useEffect(() => {
@@ -34,19 +63,33 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div id="app" className="app">
       <Title>Pokédex</Title>
       <Region onRegionPress={onRegionPress}></Region>
+      <PokeStore
+        isOpen={store}
+        onClose={() => setStore(false)}
+        details={details}
+      />
       <Container>
         {!!pokemon &&
           pokemon.map((pokemon) => (
             <Box key={pokemon.name}>
-              <img src={imgGen(pokemon.url)} alt="pokeimg"></img>
-              <p style={{ margin: "0 0 10px", textTransform: "capitalize" }}>
-                {pokemon.name}
-              </p>
+              <div
+                className="infoPoke"
+                onClick={(e) => pokeDetails(pokemon.url)}
+              >
+                <FaHeart /> <FaRegHeart />
+              </div>
+              <img
+                onClick={(e) => dexStore(pokemon.url)}
+                src={imgGen(pokemon.url)}
+                alt="pokeimg"
+              ></img>
+              <Name>{pokemon.name}</Name>
             </Box>
           ))}
+        <Modal isOpen={open} onClose={() => setOpen(false)} details={details} />
       </Container>
     </div>
   );
@@ -77,10 +120,20 @@ const Box = styled.div`
   transition: all 0.2s ease-in-out;
   border-radius: 5px;
   max-width: 134px;
-
+  position: relative;
   &:hover {
-    cursor: pointer;
     transform: scale(1.1);
+  }
+  img {
+    cursor: pointer;
+  }
+`;
+
+const Name = styled.div`
+  text-transform: capitalize;
+  text-align: center;
+  p {
+    margin: 5px auto 10px 0;
   }
 `;
 

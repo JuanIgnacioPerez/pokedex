@@ -29,7 +29,7 @@ const Location = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 20px;
+  flex-wrap: wrap;
 `;
 
 const Box = styled.button`
@@ -37,7 +37,6 @@ const Box = styled.button`
   padding: 10px 20px;
   background: white;
   border: 1px solid #00a4c2;
-  box-shadow: #00a4c2;
   border-radius: 5px;
   cursor: pointer;
   p {
