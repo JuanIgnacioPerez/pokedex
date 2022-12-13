@@ -5,6 +5,7 @@ import Region from "./components/region";
 import Modal from "./components/modal";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import PokeStore from "./components/pokeStore";
+import NoRegion from "./components/noRegion";
 
 import "./styles.css";
 //import { PokeProvider, usePoke } from "./context/context";
@@ -30,16 +31,25 @@ function App() {
   const [details, setDetails] = useState();
   const [open, setOpen] = useState(false);
   const [store, setStore] = useState(false);
+  const [error, setError] = useState(false);
 
   async function onRegionPress(generation) {
-    const pokeGen = await pokedex(generation);
-    setPokemon(pokeGen);
+    try {
+      const pokeGen = await pokedex(generation);
+      setPokemon(pokeGen);
+    } catch {
+      setError(true);
+    }
   }
 
   async function pokeDetails(url) {
-    const details = await pokeType(url);
-    setDetails(details);
-    setOpen(true);
+    try {
+      const details = await pokeType(url);
+      setDetails(details);
+      setOpen(true);
+    } catch {
+      alert("Upss! algo anda mal");
+    }
   }
 
   async function dexStore(url) {
@@ -65,12 +75,21 @@ function App() {
   return (
     <div id="app" className="app">
       <Title>Pokédex</Title>
+
       <Region onRegionPress={onRegionPress}></Region>
+
+      <NoRegion
+        isOpen={error}
+        onClose={() => setError(false)}
+        className="noInfo"
+      />
+
       <PokeStore
         isOpen={store}
         onClose={() => setStore(false)}
         details={details}
       />
+
       <Container>
         {!!pokemon &&
           pokemon.map((pokemon) => (

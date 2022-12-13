@@ -29,7 +29,7 @@ function ModalInfo({ details, isOpen, onClose }) {
               size={30}
               style={{ marginRight: "5px" }}
             />
-            {details.id}
+            {details?.id}
           </div>
           <div className="info">
             <FaBroom
@@ -37,7 +37,7 @@ function ModalInfo({ details, isOpen, onClose }) {
               size={30}
               style={{ marginRight: "5px" }}
             />
-            {details.color.name}
+            {details.color?.name}
           </div>
           <div className="info">
             <FaWolfPackBattalion
@@ -45,23 +45,25 @@ function ModalInfo({ details, isOpen, onClose }) {
               size={30}
               style={{ marginRight: "5px" }}
             />
-            {details.egg_groups[0].name}
+            {details.egg_groups[0]?.name}
           </div>
-          <div className="info">
-            <FaPhoenixSquadron
-              color="rgba(253, 140, 139, 1)"
-              size={30}
-              style={{ marginRight: "5px" }}
-            />
-            {details.habitat.name}
-          </div>
+          {details.habitat?.name && (
+            <div className="info">
+              <FaPhoenixSquadron
+                color="rgba(253, 140, 139, 1)"
+                size={30}
+                style={{ marginRight: "5px" }}
+              />
+              {details.habitat?.name}
+            </div>
+          )}
           <div className="info">
             <FaGripfire
               color="rgba(253, 140, 139, 1)"
               size={30}
               style={{ marginRight: "5px" }}
             />
-            {details.shape.name}
+            {details.shape?.name}
           </div>
           <div className="info">
             <FaOptinMonster
@@ -69,7 +71,7 @@ function ModalInfo({ details, isOpen, onClose }) {
               size={30}
               style={{ marginRight: "5px" }}
             />
-            {details.growth_rate.name}
+            {details.growth_rate?.name}
           </div>
         </InfoPoke>
       </Box>
